@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block navbar %}{% include "components/navbar.html" %}{% endblock %}
+
+{% block content %}
+<h2 class="my-4">Selamat datang,{% if user.is_authenticated%} {{ user.get_username}}{% endif %}</h2>
+<div class="card my-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Exam</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for exam in exams %}
+      <tr>
+        <th scope="row">{{ exam.id }}</th>
+        <td>{{ exam.course }}</td>
+        <td>{{ exam.start_date}}</td>
+        <td>{{ exam.end_date}}</td>
+        <td><button type="button" class="btn btn-primary">kerjakan</button></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <nav aria-label="...">
+    <ul class="pagination">
+      {% if exams.has_previous %}
+      <li class="page-item disabled">
+        <a class="page-link" href="?page={{exams.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      {% endif %}
+      <li class="page-item active"><a class="page-link" href="">{{exams.number}}</a></li>
+      {% if exams.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{exams.next_page_number}}">Next</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}

@@ -3,16 +3,16 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 class Exam(models.Model):
-    title = models.CharField(max_length=200)
+    course = models.CharField(max_length=200)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
     def __str__(self):
-        return self.title
+        return self.course
 
 class Question(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    question = CKEditor5Field("Question")
+    question = CKEditor5Field("Text", config_name="extends")
     option1 = models.CharField(max_length=400)
     option2 = models.CharField(max_length=400)
     option3 = models.CharField(max_length=400)
@@ -22,3 +22,6 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+    
+class Result(models.Model):
+    pass
