@@ -29,7 +29,13 @@ def signin(request):
     return render(request, 'registration/login.html', context={'form':form})
 
 @login_required
-def mulai(request, pk):
+def konfirmasi(request, pk):
     exam = Exam.objects.get(id=pk)
 
-    return render(request, "pages/exam_detail.html", context={'exam':exam})
+    return render(request, "pages/confirm_exam.html", context={'exam':exam})
+
+def mulai_ujian(request, pk):
+    matapelajaran = Exam.objects.get(id=pk)
+    question = Question.objects.all().filter(exam=matapelajaran)
+
+    return render(request, 'pages/start_exam.html', context={"matapelajaran":matapelajaran, "quest":question})

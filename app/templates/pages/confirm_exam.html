@@ -2,11 +2,13 @@
 
 {% load static %}
 
-{% block title %}{{ exam.course}}{% endblock %}
+{% block title %}Konfirmasi ujian{% endblock %}
 
 {% block navbar %} {% include "components/navbar.html" %}{% endblock %}
 
 {% block content %}
+<br>
+<button type="button" onclick="window.location.href='{% url 'home' %}'" class="btn btn-danger">< Kembali</button>
 <h2 class="my-4">Konfirmasi tes</h2>
 <div class="card">
     <div class="card-header">
@@ -25,7 +27,7 @@
             <li>You will be told your marks immediately when you submit the answer.</li>
         </ul>
       </p>
-      <a href="#" class="btn btn-primary">Mulai ujian</a>
+      <a href="#" onclick="window.location.href='{% url 'start-exam' exam.id %}'" class="btn btn-primary">Mulai ujian</a>
     </div>
 </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
     path('accounts/login/', signin, name="login"),
-    path('mulai-ujian/<int:pk>', mulai, name="start-exam"),
+    path('konfirmasi-ujian/<int:pk>', konfirmasi, name="confirm-exam"),
+    path('soal-ujian/<int:pk>', mulai_ujian, name="start-exam"),
     path('', home, name='home')
 ]
