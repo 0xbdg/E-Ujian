@@ -1,8 +1,8 @@
 {% load static %}
 <nav class="navbar navbar-light bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand mb-0 h1" href="#">
-        <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+      <a class="navbar-brand mb-0 h1" href="{% url 'home'%}">
+        <img src="{% static 'img/school-icon.png' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
         Ujian Online
       </a>
       <span class="navbar-text">

@@ -27,3 +27,9 @@ def signin(request):
         form = LoginForm()
 
     return render(request, 'registration/login.html', context={'form':form})
+
+@login_required
+def mulai(request, pk):
+    exam = Exam.objects.get(id=pk)
+
+    return render(request, "pages/exam_detail.html", context={'exam':exam})

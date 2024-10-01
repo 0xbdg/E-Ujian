@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Halaman utama{% endblock %}
 
 {% block navbar %}{% include "components/navbar.html" %}{% endblock %}
 
@@ -26,7 +26,7 @@
         <td>{{ exam.course }}</td>
         <td>{{ exam.start_date}}</td>
         <td>{{ exam.end_date}}</td>
-        <td><button type="button" class="btn btn-primary">kerjakan</button></td>
+        <td><button type="button" onclick="window.location.href='{% url 'start-exam' exam.id %}'" class="btn btn-primary">kerjakan</button></td>
       </tr>
     {% endfor %}
     </tbody>
