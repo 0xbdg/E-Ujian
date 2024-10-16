@@ -1,3 +1,4 @@
 django
 django-ckeditor-5
+django-jazzmin
 python-dotenv

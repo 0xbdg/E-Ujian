@@ -34,6 +34,7 @@ def konfirmasi(request, pk):
 
     return render(request, "pages/confirm_exam.html", context={'exam':exam})
 
+@login_required
 def mulai_ujian(request, pk):
     matapelajaran = Exam.objects.get(id=pk)
     question = Question.objects.all().filter(exam=matapelajaran)

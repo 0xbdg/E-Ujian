@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -227,3 +228,11 @@ CKEDITOR_5_CONFIGS = {
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated",
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
+
+JAZZMIN_SETTINGS = {
+    "site_admin":"CBT app",
+    "site_header":"Dashboard",
+    "site_brand":"Admin Panel",
+    "welcome_sign": "Administrator panel",
+    "copyright": "E-ujian",
+}
