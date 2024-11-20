@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
+from django.http import HttpResponse
 
 from .forms import *
 from .models import *
@@ -37,6 +38,31 @@ def konfirmasi(request, pk):
 @login_required
 def mulai_ujian(request, pk):
     matapelajaran = Exam.objects.get(id=pk)
-    question = Question.objects.all().filter(exam=matapelajaran)
+    question = matapelajaran.objects.all()
 
-    return render(request, 'pages/start_exam.html', context={"matapelajaran":matapelajaran, "quest":question})
+    paginator = Paginator(question, 1)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.method == 'POST':
+        if 'submit' in request.POST:
+            responses = {}
+            for question in page_obj:
+                question_id = question.id
+                answer = request.POST.get(f'question_{question_id}')
+                if answer:
+                    responses[question_id] = answer
+            
+        else:
+            for question in page_obj:
+                question_id = question.id
+                answer = request.POST.get(f'question_{question_id}')
+                if answer:
+                    # Save the answer in a cookie with the question id as key
+                    response = HttpResponse("Your answers are saved.")
+                    response.set_cookie(f'question_{question_id}', answer, max_age=3600)  # Cookie valid for 1 hour
+                    return response
+
+
+
+    return render(request, 'pages/start_exam.html', context={"matapelajaran":matapelajaran, "page_obj":page_obj})

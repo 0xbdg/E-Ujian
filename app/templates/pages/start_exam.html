@@ -10,33 +10,33 @@
 <form method="post" action="">
     {% csrf_token %}
     <br>
-    {% for q in quest %}
+    {% for q in page_obj %}
     <div class="card">
-        <h5 class="card-header">Soal nomor {{ forloop.counter }}</h5>
+        <h5 class="card-header">Soal nomor {{ q.id }}</h5>
         <div class="card-body">
           <h5 class="card-title">{{ q.question | safe }}</h5>
           <hr>
           <p class="card-text">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{ forloop.counter}}" id="{{ q.option1}}">
+                <input class="form-check-input" type="radio" name="question_{{ q.id}}" value="1" id="{{ q.option1}}" {% if request.COOKIES.question_{{q.id}}  == '1' %} checked {% endif %}>
                 <label class="form-check-label" for="{{ q.option1}}">
                   {{ q.option1}}
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{ forloop.counter}}" id="{{ q.option2}}">
+                <input class="form-check-input" type="radio" name="question_{{ q.id}}" value="2" id="{{ q.option2}}" {% if request.COOKIES.question_2 == '2' %} checked {% endif %}>
                 <label class="form-check-label" for="{{ q.option2}}">
                     {{ q.option2}}
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{ forloop.counter}}" id="{{q.option3}}">
+                <input class="form-check-input" type="radio" name="{{ q.id}}" value="3" id="{{ q.option3 }}" {% if request.COOKIES.question_3 == '3' %} checked {% endif %}>
                 <label class="form-check-label" for="{{ q.option3}}">
                     {{ q.option3}}
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{ forloop.counter}}" id="{{q.option4}}">
+                <input class="form-check-input" type="radio" name="{{ q.id}}" value="4" id="{{q.option4}}" {% if request.COOKIES.question_4 == '4' %} checked {% endif %}>
                 <label class="form-check-label" for="{{ q.option4}}">
                     {{ q.option4}}
                 </label>
@@ -46,6 +46,26 @@
     </div>
     <br>
     {% endfor %}
+
+
+    
+    <div class="pagination">
+        <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        </span>
+    </div>
     <input class="btn btn-success" type="submit" value="Submit">
 </form>
 {% endblock %}

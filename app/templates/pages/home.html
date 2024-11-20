@@ -8,7 +8,7 @@
 
 {% block content %}
 <h2 class="my-4">Selamat datang,{% if user.is_authenticated%} {{ user.get_username}}{% endif %}</h2>
-<div class="card my-4">
+<div class="card my-4 table-responsive">
   <table class="table">
     <thead>
       <tr>
