@@ -1,13 +1,34 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login,logout
+from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
+from django.views import View 
+from django.views.generic import FormView
+from django.urls import reverse_lazy
 
 from .forms import *
 from .models import *
 
 # Create your views here.
+
+class LoginView(FormView):
+    form_class=LoginForm
+    template_name = "auth/login.html"
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+
+        else:
+            return self.form_valid(form)
 
 @login_required
 def home(request):
@@ -17,17 +38,6 @@ def home(request):
     page_object = paginator.get_page(page_num)
     return render(request, 'pages/home.html', context={'exams':page_object})
 
-def signin(request):
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request,user)
-            return redirect('home')
-    else:
-        form = LoginForm()
-
-    return render(request, 'registration/login.html', context={'form':form})
 
 @login_required
 def konfirmasi(request, pk):

@@ -236,3 +236,5 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Administrator panel",
     "copyright": "E-ujian",
 }
+
+AUTH_USER_MODEL = "app.Account"
