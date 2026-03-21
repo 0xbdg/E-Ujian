@@ -14,6 +14,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     photo = models.ImageField()
+    gender = models.CharField(max_length=50)
 
 class Exam(models.Model):
     course = models.CharField(max_length=200)

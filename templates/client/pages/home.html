@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "client/base.html" %}
 
 {% load static %}
 
 {% block title %}Halaman utama{% endblock %}
 
-{% block navbar %}{% include "components/navbar.html" %}{% endblock %}
+{% block navbar %}{% include "client/components/navbar.html" %}{% endblock %}
 
 {% block content %}
 <h2 class="my-4">Selamat datang,{% if user.is_authenticated%} {{ user.get_username}}{% endif %}</h2>

@@ -1,0 +1,22 @@
+{% load static %}
+
+<header class="bg-white shadow p-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <button class="md:hidden" onclick="toggleSidebar()">☰</button>
+        <h1 class="text-lg font-semibold">Dashboard</h1>
+    </div>
+
+    <div class="flex items-center gap-3 relative">
+        <button onclick="toggleMenu('profileMenu')" class="flex items-center gap-2">
+            <span class="text-gray-600">Admin</span>
+            <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+        </button>
+
+        <div id="profileMenu" class="absolute right-0 top-12 bg-white shadow rounded w-40 hidden">
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+            <hr>
+            <a href="#" class="block px-4 py-2 text-red-500 hover:bg-gray-100">Logout</a>
+        </div>
+    </div>
+</header>

@@ -1,51 +1,44 @@
-from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate,login,logout
-from django.http import HttpResponse
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate,login
 from django.views import View 
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from .models import *
 
 # Create your views here.
 
-class LoginView(FormView):
-    form_class=LoginForm
+class SigninView(LoginView):
     template_name = "auth/login.html"
-    success_url = reverse_lazy('home')
+    authentication_form = LoginForm
 
-    def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
+    def get_success_url(self):
+        user = self.request.user
 
-        user = authenticate(self.request, username=username, password=password)
+        return reverse_lazy("home")
 
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
+class HomeView(LoginRequiredMixin,ListView):
+    model = Exam
+    template_name = "client/pages/home.html"
+    paginate_by = 5 
+    context_object_name = "exams"
 
-        else:
-            return self.form_valid(form)
-
-@login_required
 def home(request):
     exam = Exam.objects.all()
     paginator = Paginator(exam, 5)
     page_num = request.GET.get('page')
     page_object = paginator.get_page(page_num)
-    return render(request, 'pages/home.html', context={'exams':page_object})
+    return render(request, 'client/pages/home.html', context={'exams':page_object})
 
 
-@login_required
 def konfirmasi(request, pk):
     exam = Exam.objects.get(id=pk)
 
-    return render(request, "pages/confirm_exam.html", context={'exam':exam})
+    return render(request, "client/pages/confirm_exam.html", context={'exam':exam})
 
-@login_required
 def mulai_ujian(request, pk):
     matapelajaran = Exam.objects.get(id=pk)
     question = matapelajaran.objects.all()

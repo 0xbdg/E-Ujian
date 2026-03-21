@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block navbar%}
+{%include "components/navbar.html"%}
+{% endblock %}
+
+
+{% block content %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h2 class="text-gray-500">Total Siswa</h2>
+        <p class="text-2xl font-bold">120</p>
+    </div>
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h2 class="text-gray-500">Total Guru</h2>
+        <p class="text-2xl font-bold">25</p>
+    </div>
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h2 class="text-gray-500">Total Soal</h2>
+        <p class="text-2xl font-bold">560</p>
+    </div>
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h2 class="text-gray-500">Ujian Aktif</h2>
+        <p class="text-2xl font-bold">3</p>
+    </div>
+</div>
+
+<div class="mt-8 bg-white p-4 rounded-xl shadow">
+    <h2 class="text-lg font-semibold mb-4">Aktivitas Terbaru</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b">
+                    <th class="p-2">Nama</th>
+                    <th class="p-2">Role</th>
+                    <th class="p-2">Aktivitas</th>
+                    <th class="p-2">Waktu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b">
+                    <td class="p-2">Budi</td>
+                    <td class="p-2">Siswa</td>
+                    <td class="p-2">Mengerjakan ujian</td>
+                    <td class="p-2">10 menit lalu</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="p-2">Siti</td>
+                    <td class="p-2">Guru</td>
+                    <td class="p-2">Menambah soal</td>
+                    <td class="p-2">30 menit lalu</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
