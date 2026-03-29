@@ -1,4 +1,4 @@
 django
 django-ckeditor-5
-django-jazzmin
+django-tailwind
 python-dotenv

@@ -35,15 +35,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tailwind',
     'app',
-    'django_ckeditor_5'
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [
@@ -229,12 +229,5 @@ CKEDITOR_5_CONFIGS = {
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated",
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 
-JAZZMIN_SETTINGS = {
-    "site_admin":"CBT app",
-    "site_header":"Dashboard",
-    "site_brand":"Admin Panel",
-    "welcome_sign": "Administrator panel",
-    "copyright": "E-ujian",
-}
 
 AUTH_USER_MODEL = "app.Account"

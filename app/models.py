@@ -7,6 +7,7 @@ class Account(AbstractUser):
 
 class Student(models.Model):
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
+    nis = models.BigIntegerField(null=False, blank=False)
     photo = models.ImageField()
     grade = models.CharField(max_length=50)
     gender = models.CharField(max_length=20)
@@ -44,4 +45,5 @@ class MultipleChoice(models.Model):
 
 class Result(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    point = models.IntegerField(null=True, blank=True)
 
