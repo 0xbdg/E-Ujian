@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tailwind',
+    'style',
     'app',
     'django_ckeditor_5',
 ]
@@ -231,3 +232,5 @@ CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 
 
 AUTH_USER_MODEL = "app.Account"
+
+TAILWIND_APP_NAME = "style"
