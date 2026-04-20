@@ -2,4 +2,6 @@ django
 django-ckeditor-5
 django-tailwind
 django-browser-reload
+django-seed
+psycopg2-binary
 python-dotenv

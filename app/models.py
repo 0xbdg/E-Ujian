@@ -4,7 +4,8 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Account(AbstractUser):
-    role = models.CharField(max_length=50)
+    ROLE = (("student", "Student"), ("teacher", "Teacher"), ("admin", "Admin"))
+    role = models.CharField(max_length=50, choices=ROLE)
 
 
 class Student(models.Model):
@@ -23,21 +24,17 @@ class Teacher(models.Model):
 
 class Exam(models.Model):
     course = models.CharField(max_length=200)
+    desc = models.CharField(max_length=200)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     created_by = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.course
-
 
 class Question(models.Model):
+    TYPE = (("multiple", "Multiple Choices"), ("essay", "Essay"))
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    question_type = models.CharField(max_length=50)
+    question_type = models.CharField(max_length=50, choices=TYPE)
     question = CKEditor5Field("Text", config_name="extends")
-
-    def __str__(self):
-        return self.question
 
 
 class MultipleChoice(models.Model):

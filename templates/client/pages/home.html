@@ -7,44 +7,94 @@
 {% block navbar %}{% include "client/components/navbar.html" %}{% endblock %}
 
 {% block content %}
-<h2 class="my-4">Selamat datang,{% if user.is_authenticated%} {{ user.get_username}}{% endif %}</h2>
-<div class="card my-4 table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">No</th>
-        <th scope="col">Mata pelajaran</th>
-        <th scope="col">Waktu mulai</th>
-        <th scope="col">Waktu akhir</th>
-        <th scope="col">Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for exam in exams %}
-      <tr>
-        <th scope="row">{{ exam.id }}</th>
-        <td>{{ exam.course }}</td>
-        <td>{{ exam.start_date}}</td>
-        <td>{{ exam.end_date}}</td>
-        <td><button type="button" onclick="window.location.href='{% url 'confirm-exam' exam.id %}'" class="btn btn-primary">kerjakan</button></td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  <div aria-label="...">
-    <ul class="pagination justify-content-center">
-      {% if exams.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{exams.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
-      </li>
-      {% endif %}
-      <li class="page-item active"><a class="page-link" href="">{{exams.number}}</a></li>
-      {% if exams.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{exams.next_page_number}}">Next</a>
-      </li>
-      {% endif %}
-    </ul>
-  </div>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h1 class="text-2xl font-bold text-gray-900">Selamat Datang di Portal Ujian</h1>
+            <p class="text-gray-500 mt-1">Pastikan koneksi internet kamu stabil sebelum memulai ujian.</p>
 </div>
+
+<div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Ujian Hari Ini</h2>
+            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">{{exam_count}} Tersedia</span>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 overflow-hidden">
+                <div class="h-2 bg-blue-500"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Pemrograman Web</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1">Ujian Tengah Semester</h3>
+                        </div>
+                        <span class="bg-blue-50 text-blue-600 border border-blue-200 text-xs px-2 py-1 rounded">Aktif</span>
+                    </div>
+                    
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Waktu: 90 Menit
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Soal: 50 Pilihan Ganda
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors duration-200">
+                        Mulai Ujian
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 opacity-90">
+                <div class="h-2 bg-gray-300"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Keamanan Jaringan</span>
+                            <h3 class="text-lg font-bold text-gray-700 mt-1">Kuis Praktikum</h3>
+                        </div>
+                        <span class="bg-gray-100 text-gray-600 border border-gray-200 text-xs px-2 py-1 rounded">Belum Mulai</span>
+                    </div>
+                    
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Jadwal: 14:00 WITA
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Waktu: 60 Menit
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-gray-100 text-gray-400 font-medium py-2 px-4 rounded cursor-not-allowed" disabled>
+                        Belum Dibuka
+                    </button>
+                </div>
+            </div>
+
+</div>
+{% if is_paginated %}
+<div class="inline-flex items-center p-1 rounded bg-white space-x-2">
+    {% if page_obj.has_previous%}
+    <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="#">
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+        </svg>
+    </a>
+    {% endif %}
+    <p class="text-gray-500">Halaman {{ page_obj.number }} dari {{ paginator.num_pages }}</p>
+    {% if page_obj.has_next%}
+    <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="#">
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+    </a>
+    {%endif %}
+</div>
+{% endif %}
 {% endblock %}

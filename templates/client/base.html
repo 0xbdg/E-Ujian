@@ -1,19 +1,24 @@
 {% load static %}
 {% load static tailwind_tags %}
-
+{% tailwind_css%}
 <!DOCTYPE html>
-<html lang='id'>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        {% tailwind_css %}
-        
-    </head>
-    <body>
-        {% block navbar %}{% endblock %}
-        <main class="container">
-        {% block content %}{% endblock %}
-        </main>
-    </body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{%endblock%}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    {% block navbar %}{% endblock%} 
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content%} {% endblock %}
+    </main>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
 </html>
