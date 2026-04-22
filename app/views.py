@@ -41,8 +41,13 @@ class HomeView(ListView):
 
 
 class StartExamView(View):
-    def post(self, request):
-        pass
+    def get(self, request, pk):
+        question = Question.objects.get(exam=pk)
+        mc = MultipleChoice.objects.get(question_id=question.id)
+
+        return render(
+            request, "client/pages/start_exam.html", {"quest": question, "mc": mc}
+        )
 
 
 """

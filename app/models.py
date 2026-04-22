@@ -22,6 +22,11 @@ class Teacher(models.Model):
     gender = models.CharField(max_length=50)
 
 
+class Subject(models.Model):
+    subject = models.CharField(max_length=500, null=False)
+    teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+
 class Exam(models.Model):
     course = models.CharField(max_length=200)
     desc = models.CharField(max_length=200)
