@@ -22,7 +22,7 @@ from django.conf import settings
 from app.admin import *
 
 urlpatterns = [
-    path("admin/dashboard", DashboardView.as_view()),
+    path("admin/", admin.site.urls),
     path("", include("app.urls")),
     path("ckeditor/", include("django_ckeditor_5.urls")),
 ]

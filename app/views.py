@@ -1,13 +1,13 @@
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import authenticate, login
 from django.views import View
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from .forms import *
 from .models import *
+from .mixin import StudentMixin
 
 # Create your views here.
 
@@ -19,11 +19,12 @@ class SigninView(LoginView):
     def get_success_url(self):
         user = self.request.user
 
-        return reverse_lazy("home")
-
-
-class SignoutView(LogoutView):
-    pass
+        if user.is_superuser:
+            return reverse_lazy("home")
+        if user.role == "teacher" and user.is_staff:
+            return reverse_lazy("home")
+        if user.role == "student":
+            return reverse_lazy("home")
 
 
 class HomeView(ListView):
@@ -36,18 +37,23 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
 
         context["exam_count"] = Exam.objects.count()
-
+        context["exams"] = Exam.objects.all()
         return context
 
 
 class StartExamView(View):
     def get(self, request, pk):
-        question = Question.objects.get(exam=pk)
+        question = Question.objects.filter(exam=pk).iterator()
         mc = MultipleChoice.objects.get(question_id=question.id)
 
         return render(
-            request, "client/pages/start_exam.html", {"quest": question, "mc": mc}
+            request, "client/pages/start_exam.html", {"questions": question, "mc": mc}
         )
+
+
+class DashboardView(View):
+    def get(self, request):
+        return render(request, "superuser/pages/dashboard.html")
 
 
 """
