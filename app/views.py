@@ -3,11 +3,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
 from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from .forms import *
 from .models import *
-from .mixin import StudentMixin
+from .mixin import *
 
 # Create your views here.
 
@@ -21,9 +20,9 @@ class SigninView(LoginView):
 
         if user.is_superuser:
             return reverse_lazy("home")
-        if user.role == "teacher" and user.is_staff:
+        if user.is_teacher and user.is_staff:
             return reverse_lazy("home")
-        if user.role == "student":
+        if user.is_student:
             return reverse_lazy("home")
 
 

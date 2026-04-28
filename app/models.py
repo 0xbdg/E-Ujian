@@ -6,13 +6,12 @@ GENDER = (("male", "Male"), ("female", "Female"))
 
 
 class Account(AbstractUser):
-    ROLE = (("student", "Student"), ("teacher", "Teacher"))
-    role = models.CharField(max_length=50, choices=ROLE, null=True, blank=True)
+    is_teacher = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
 
 
 class Student(models.Model):
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    nis = models.BigIntegerField(null=False, blank=False)
     photo = models.ImageField()
     grade = models.CharField(max_length=50)
     gender = models.CharField(max_length=20, choices=GENDER)
@@ -38,6 +37,9 @@ class Exam(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     created_by = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course
 
 
 class Question(models.Model):
