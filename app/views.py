@@ -49,7 +49,7 @@ class StartExamView(View):
             request,
             "client/pages/start_exam.html",
             {
-                "questions": question,
+                "question": question,
                 "choices": mc,
                 "count": MultipleChoice.objects.count(),
                 "type": question.question_type,
