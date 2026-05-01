@@ -8,3 +8,15 @@
   * the scope of this path.
   */
 @source "../../../**/*.{html,py,js}";
+
+
+@layer utilities {
+
+    .question-tab {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+}

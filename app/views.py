@@ -42,11 +42,18 @@ class HomeView(ListView):
 
 class StartExamView(View):
     def get(self, request, pk):
-        question = Question.objects.filter(exam=pk).iterator()
-        mc = MultipleChoice.objects.get(question_id=question.id)
+        question = Question.objects.get(id=pk)
+        mc = MultipleChoice.objects.filter(question_id=question.id)
 
         return render(
-            request, "client/pages/start_exam.html", {"questions": question, "mc": mc}
+            request,
+            "client/pages/start_exam.html",
+            {
+                "questions": question,
+                "choices": mc,
+                "count": MultipleChoice.objects.count(),
+                "type": question.question_type,
+            },
         )
 
 

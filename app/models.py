@@ -68,6 +68,9 @@ class MultipleChoice(models.Model):
     )
     answer = models.CharField(max_length=200, choices=cat)
 
+    def __str__(self):
+        return f"{self.question_id.exam} - soal nomor {self.id}"
+
 
 class Result(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
