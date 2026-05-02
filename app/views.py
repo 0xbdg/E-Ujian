@@ -54,9 +54,11 @@ class StartExamView(View):
                 "choices": mc,
                 "essay": es,
                 "count": MultipleChoice.objects.count(),
-                "type": question.question_type,
             },
         )
+
+    def post(self, request, pk):
+        data = request.POST
 
 
 class DashboardView(View):

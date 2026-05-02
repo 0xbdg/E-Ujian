@@ -75,5 +75,4 @@ class MultipleChoice(models.Model):
 class Result(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam_id = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     score = models.IntegerField(null=True, blank=True)
