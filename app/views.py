@@ -44,6 +44,7 @@ class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
         mc = MultipleChoice.objects.filter(question_id=question.id)
+        es = Essay.objects.filter(question_id=question.id)
 
         return render(
             request,
@@ -51,6 +52,7 @@ class StartExamView(View):
             {
                 "question": question,
                 "choices": mc,
+                "essay": es,
                 "count": MultipleChoice.objects.count(),
                 "type": question.question_type,
             },
