@@ -42,11 +42,11 @@
                     </div>
                     {% endfor %}
                 {% elif question.question_type == "essay" %}
-                    {% for q in essay %}
+                    {% for q in choices %}
                     <div id="soal-{{forloop.counter}}" class="question-tab {% if forloop.first%} active {% endif %} bg-white shadow-sm border border-gray-200 rounded-lg p-6 lg:p-8">
                         <div class="flex justify-between items-center mb-6 border-b pb-4">
                             <h2 class="text-xl font-bold">Soal No. {{forloop.counter}}</h2>
-                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2 py-1 rounded">Esai</span>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2 py-1 rounded">{{ question.question_type }}</span>
                         </div>
                         <p class="text-gray-700 mb-6 text-lg">{{q.question | safe}}</p>
                         

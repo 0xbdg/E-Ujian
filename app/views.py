@@ -8,6 +8,8 @@ from .forms import *
 from .models import *
 from .mixin import *
 
+import datetime
+
 # Create your views here.
 
 
@@ -37,14 +39,22 @@ class HomeView(ListView):
 
         context["exam_count"] = Exam.objects.count()
         context["exams"] = Exam.objects.all()
+        context["date"] = datetime.datetime.now()
         return context
 
 
 class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
-        mc = MultipleChoice.objects.filter(question_id=question.id)
-        es = Essay.objects.filter(question_id=question.id)
+        mc = None
+        c = None
+
+        if question.question_type == "multiple":
+            mc = MultipleChoice.objects.filter(question_id=question.id)
+            c = MultipleChoice.objects.count()
+        elif question.question_type == "essay":
+            mc = Essay.objects.filter(question_id=question.id)
+            c = Essay.objects.count()
 
         return render(
             request,
@@ -52,13 +62,14 @@ class StartExamView(View):
             {
                 "question": question,
                 "choices": mc,
-                "essay": es,
-                "count": MultipleChoice.objects.count(),
+                "count": c,
             },
         )
 
     def post(self, request, pk):
         data = request.POST
+
+        Result().save()
 
 
 class DashboardView(View):

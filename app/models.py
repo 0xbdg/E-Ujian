@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_ckeditor_5.fields import CKEditor5Field
 
-GENDER = (("male", "Male"), ("female", "Female"))
+GENDER = (("Male", "male"), ("Female", "female"))
 
 
 class Account(AbstractUser):
@@ -30,6 +30,9 @@ class Teacher(models.Model):
     gender = models.CharField(max_length=50, choices=GENDER)
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.user_id.username}"
+
 
 class Exam(models.Model):
     course = models.CharField(max_length=200)
@@ -47,10 +50,16 @@ class Question(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     question_type = models.CharField(max_length=50, choices=TYPE)
 
+    def __str__(self):
+        return f"{self.exam.course} - {self.question_type}"
+
 
 class Essay(models.Model):
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     question = CKEditor5Field("Text", config_name="extends")
+
+    def __str__(self):
+        return f"{self.question_id.exam} - {self.id}"
 
 
 class MultipleChoice(models.Model):
@@ -61,10 +70,10 @@ class MultipleChoice(models.Model):
     option3 = models.CharField(max_length=400)
     option4 = models.CharField(max_length=400)
     cat = (
-        ("option1", "Option1"),
-        ("option2", "Option2"),
-        ("option3", "Option3"),
-        ("option4", "Option4"),
+        ("Option1", "option1"),
+        ("Option2", "option2"),
+        ("Option3", "option3"),
+        ("Option4", "option4"),
     )
     answer = models.CharField(max_length=200, choices=cat)
 
