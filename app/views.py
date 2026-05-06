@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
 from django.views import View
 from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
@@ -38,8 +39,15 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
 
         context["exam_count"] = Exam.objects.count()
-        context["exams"] = Exam.objects.all()
-        context["date"] = datetime.datetime.now()
+        context["exam_active"] = Exam.objects.filter(
+            start_date__lte=datetime.datetime.now()
+        )
+        context["exam_ended"] = Exam.objects.filter(
+            end_date__lte=datetime.datetime.now()
+        )
+        context["exam_no"] = Exam.objects.filter(
+            start_date__gte=datetime.datetime.now()
+        )
         return context
 
 
@@ -67,9 +75,9 @@ class StartExamView(View):
         )
 
     def post(self, request, pk):
-        data = request.POST
+        data = request.POST.dict().items()
 
-        Result().save()
+        return HttpResponse(data)
 
 
 class DashboardView(View):

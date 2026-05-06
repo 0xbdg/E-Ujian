@@ -11,7 +11,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             
             <div class="lg:col-span-3">
-                <form id="examForm" enctype="multipart/form-data" method="POST" action="">
+                <form id="examForm" enctype="multipart/form-data" method="POST" action="{% url 'start-exam' pk=question.id %}">
+                {% csrf_token %}
                 {% if question.question_type == "multiple" %}
                     {% for quest in choices %}
                     <div id="soal-{{forloop.counter}}" class="question-tab {% if forloop.first %} active {% endif %} bg-white shadow-sm border border-gray-200 rounded-lg p-6 lg:p-8">
@@ -76,6 +77,7 @@
                             Selanjutnya &rarr;
                         </button>
                     </div>
+                    <button type="submit">sdajdaskjdask</button>
                 </form>
             </div>
 
@@ -104,7 +106,6 @@
                     {% else %}
                         <button type="button" id="btn-nav-{{forloop.counter}}" onclick="goToQuestion({{forloop.counter}})" class="h-10 w-full rounded border border-gray-300 bg-white text-gray-700 font-medium hover:bg-gray-100 transition text-sm"">{{forloop.counter}}</button>
                     {% endif %}
-
                     {% endfor %}
                     </div>
                 </div>
