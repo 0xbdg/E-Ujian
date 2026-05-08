@@ -83,37 +83,3 @@ class StartExamView(View):
 class DashboardView(View):
     def get(self, request):
         return render(request, "superuser/pages/dashboard.html")
-
-
-"""
-def mulai_ujian(request, pk):
-    matapelajaran = Exam.objects.get(id=pk)
-    question = matapelajaran.objects.all()
-
-    paginator = Paginator(question, 1)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    if request.method == "POST":
-        if "submit" in request.POST:
-            responses = {}
-            for question in page_obj:
-                question_id = question.id
-                answer = request.POST.get(f"question_{question_id}")
-                if answer:
-                    responses[question_id] = answer
-
-        else:
-            for question in page_obj:
-                question_id = question.id
-                answer = request.POST.get(f"question_{question_id}")
-                if answer:
-                    response = HttpResponse("Your answers are saved.")
-                    response.set_cookie(
-                        f"question_{question_id}", answer, max_age=3600
-                    )                      return response
-    return render(
-        request,
-        "pages/start_exam.html",
-        context={"matapelajaran": matapelajaran, "page_obj": page_obj},
-    )"""

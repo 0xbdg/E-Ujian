@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             
             <div class="lg:col-span-3">
-                <form id="examForm" enctype="multipart/form-data" method="POST" action="{% url 'start-exam' pk=question.id %}">
+                <form id="examForm" enctype="multipart/form-data" method="POST" action="{% url 'start-exam' pk=question.id %}" autocomplete="off">
                 {% csrf_token %}
                 {% if question.question_type == "multiple" %}
                     {% for quest in choices %}
@@ -24,19 +24,19 @@
                         
                         <div class="space-y-3">
                             <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
-                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option1" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})">
+                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option1" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})" required>
                                 <span class="ml-3 text-gray-700">{{quest.option1}}</span>
                             </label>
                             <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
-                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option2" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})">
+                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option2" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})" required>
                                 <span class="ml-3 text-gray-700">{{quest.option2}}</span>
                             </label>
                             <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
-                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option3" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})">
+                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option3" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})" required>
                                 <span class="ml-3 text-gray-700">{{quest.option3}}</span>
                             </label>
                             <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
-                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option4" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})">
+                                <input type="radio" name="jawaban_{{forloop.counter}}" value="option4" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300" onchange="markAnswered({{forloop.counter}})" required>
                                 <span class="ml-3 text-gray-700">{{quest.option4}}</span>
                             </label>
                         </div>
@@ -70,14 +70,17 @@
 
                     
                     <div class="flex justify-between mt-6">
-                        <button type="button" onclick="prevQuestion()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded font-medium transition">
-                            &larr; Sebelumnya
-                        </button>
-                        <button type="button" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-medium transition">
-                            Selanjutnya &rarr;
-                        </button>
+                        <div>
+                            <button type="button" onclick="prevQuestion()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded font-medium transition">
+                                &larr; Sebelumnya
+                            </button>
+                            <button type="button" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-medium transition">
+                                Selanjutnya &rarr;
+                            </button>
+                        </div>
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-medium transition">Submit</button>
+
                     </div>
-                    <button type="submit">sdajdaskjdask</button>
                 </form>
             </div>
 
