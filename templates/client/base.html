@@ -5,6 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{%endblock%}</title>
+
+    <script>
+        profileBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', function(event) {
+            if (!dropdownMenu.contains(event.target) && !profileBtn.contains(event.target)) {
+                if (!dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            }
+        });
+    </script>
     {% tailwind_css %}
    
 </head>
@@ -15,5 +30,6 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {% block content%} {% endblock %}
     </main>
+    {% block js %}{% endblock %}
 </body>
 </html>

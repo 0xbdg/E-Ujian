@@ -75,9 +75,10 @@ class StartExamView(View):
         )
 
     def post(self, request, pk):
-        data = request.POST.dict().items()
+        data = request.POST.items()
 
-        return HttpResponse(data)
+        for var, val in data:
+            return HttpResponse(val)
 
 
 class DashboardView(View):

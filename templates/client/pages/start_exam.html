@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             
             <div class="lg:col-span-3">
-                <form id="examForm" enctype="multipart/form-data" method="POST" action="{% url 'start-exam' pk=question.id %}" autocomplete="off">
+                <form id="examForm" enctype="multipart/form-data" method="POST" action="{% url 'start-exam' pk=question.id %}">
                 {% csrf_token %}
                 {% if question.question_type == "multiple" %}
                     {% for quest in choices %}
@@ -116,7 +116,9 @@
             </div>
         </div>
 </div>
+{% endblock%}
 
+{% block js%}
 <script>
 const totalQuestions = {{count}};
 let currentQuestion = 1;
