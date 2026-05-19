@@ -43,9 +43,9 @@ class HomeView(ListView):
             start_date__lte=datetime.datetime.now()
         )
         context["exam_ended"] = Exam.objects.filter(
-            end_date__lte=datetime.datetime.now()
+            end_date__gte=datetime.datetime.now()
         )
-        context["exam_no"] = Exam.objects.filter(
+        context["exam_inactive"] = Exam.objects.filter(
             start_date__gte=datetime.datetime.now()
         )
         return context
@@ -75,10 +75,22 @@ class StartExamView(View):
         )
 
     def post(self, request, pk):
+
         data = request.POST.items()
+        test = []
 
         for var, val in data:
-            return HttpResponse(val)
+            if var.startswith("jawaban_"):
+
+                test.append(val)
+
+                Result(
+                    student_id=request.user,
+                    question_id=Question.objects.get(id=pk),
+                    answer=val,
+                ).save()
+
+        return HttpResponse(test)
 
 
 class DashboardView(View):

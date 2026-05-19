@@ -82,6 +82,13 @@ class MultipleChoice(models.Model):
 
 
 class Result(models.Model):
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam_id = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    score = models.IntegerField(null=True, blank=True)
+    student_id = models.ForeignKey(Account, on_delete=models.CASCADE)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=7, null=False, blank=False)
+
+    def __str__(self):
+        return f"{self.student_id.username} - {self.question_id.exam} - {self.answer}"
+
+
+class ExamFinish(models.Model):
+    pass
