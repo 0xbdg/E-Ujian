@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE")
 
-TIME_ZONE = os.environ.get("TIME_ZONE")
+TIME_ZONE = os.environ.get('TIME_ZONE')
 
 USE_I18N = True
 

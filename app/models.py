@@ -12,7 +12,7 @@ class Account(AbstractUser):
 
 class Student(models.Model):
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(null=True, blank=True)
     grade = models.CharField(max_length=50)
     gender = models.CharField(max_length=20, choices=GENDER)
 
@@ -26,7 +26,7 @@ class Subject(models.Model):
 
 class Teacher(models.Model):
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(null=True, blank=True)
     gender = models.CharField(max_length=50, choices=GENDER)
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
@@ -37,8 +37,9 @@ class Teacher(models.Model):
 class Exam(models.Model):
     course = models.CharField(max_length=200)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    exam_date = models.DateField(null=False)
+    start_time = models.TimeField(null=False)
+    end_time = models.TimeField(null=False)
     created_by = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -91,4 +92,6 @@ class Result(models.Model):
 
 
 class ExamFinish(models.Model):
-    pass
+    student_id = models.ForeignKey(Account, on_delete=models.CASCADE)
+    exam_id = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    finished = models.BooleanField(default=False, editable=False)

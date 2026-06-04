@@ -5,11 +5,11 @@ from django.views import View
 from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import render
+from django.utils import timezone
 from .forms import *
 from .models import *
 from .mixin import *
 
-import datetime
 
 # Create your views here.
 
@@ -33,20 +33,20 @@ class HomeView(ListView):
     model = Exam
     template_name = "client/pages/home.html"
     paginate_by = 9
-    queryset = Exam.objects.order_by("-id")
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context["exam_count"] = Exam.objects.count()
         context["exam_active"] = Exam.objects.filter(
-            start_date__lte=datetime.datetime.now()
+            start_time__lte=timezone.localtime().time(),
+            end_time__gte=timezone.localtime().time()
         )
         context["exam_ended"] = Exam.objects.filter(
-            end_date__gte=datetime.datetime.now()
+            end_time__lte=timezone.localtime().time()
         )
         context["exam_inactive"] = Exam.objects.filter(
-            start_date__gte=datetime.datetime.now()
+            start_time__gte=timezone.localtime().time()
         )
         return context
 
@@ -54,14 +54,14 @@ class HomeView(ListView):
 class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
-        mc = None
+        types = None
         c = None
 
         if question.question_type == "multiple":
-            mc = MultipleChoice.objects.filter(question_id=question.id)
+            types = MultipleChoice.objects.filter(question_id=question.id)
             c = MultipleChoice.objects.count()
         elif question.question_type == "essay":
-            mc = Essay.objects.filter(question_id=question.id)
+            types = Essay.objects.filter(question_id=question.id)
             c = Essay.objects.count()
 
         return render(
@@ -69,7 +69,7 @@ class StartExamView(View):
             "client/pages/start_exam.html",
             {
                 "question": question,
-                "choices": mc,
+                "choices": types,
                 "count": c,
             },
         )
@@ -89,6 +89,9 @@ class StartExamView(View):
                     question_id=Question.objects.get(id=pk),
                     answer=val,
                 ).save()
+
+        ExamFinish(student_id=request.user.username, exam_id=Exam.objects.get(id=pk).course, finished=True).save()
+
 
         return HttpResponse(test)
 
