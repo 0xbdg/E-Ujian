@@ -6,6 +6,7 @@ from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
+from datetime import datetime
 from .forms import *
 from .models import *
 from .mixin import *
@@ -54,9 +55,12 @@ class HomeView(ListView):
 class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
-        #finish = ExamFinish.objects.get(student_id=request.user, exam_id=pk)
+        efinish = ExamFinish.objects.get(student=request.user, exam=pk)
         types = None
         c = None
+        time_e = Exam.objects.get(id=pk).end_time
+        time_s = datetime.now()
+
 
         if question.question_type == "multiple":
             types = MultipleChoice.objects.filter(question_id=question.id)
@@ -72,6 +76,9 @@ class StartExamView(View):
                 "question": question,
                 "choices": types,
                 "count": c,
+                "time_start": ((time_s.hour * 3600) + (time_s.minute * 60) + time_s.second),
+                "time_end":((time_e.hour * 3600) + (time_e.minute * 60) +time_e.second),
+                "is_ended": efinish.finished
             },
         )
 
