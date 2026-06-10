@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
 from .forms import *
 from .models import *
@@ -37,7 +37,7 @@ class HomeView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["exam_count"] = Exam.objects.count()
+        context["exam_count"] = Exam.objects.count(),
         context["exam_active"] = Exam.objects.filter(
             start_time__lte=timezone.localtime().time(),
             end_time__gte=timezone.localtime().time()
@@ -54,6 +54,7 @@ class HomeView(ListView):
 class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
+        #finish = ExamFinish.objects.get(student_id=request.user, exam_id=pk)
         types = None
         c = None
 
@@ -90,10 +91,10 @@ class StartExamView(View):
                     answer=val,
                 ).save()
 
-        ExamFinish(student_id=request.user.username, exam_id=Exam.objects.get(id=pk).course, finished=True).save()
+        ExamFinish(student=request.user, exam=get_object_or_404(Exam, id=pk), finished=True).save()
 
-
-        return HttpResponse(test)
+        #return HttpResponse(test)
+        return redirect("home")
 
 
 class DashboardView(View):

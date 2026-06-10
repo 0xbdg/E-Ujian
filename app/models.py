@@ -92,6 +92,6 @@ class Result(models.Model):
 
 
 class ExamFinish(models.Model):
-    student_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    exam_id = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    finished = models.BooleanField(default=False, editable=False)
+    student = models.ForeignKey(Account, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    finished = models.BooleanField(default=False)
