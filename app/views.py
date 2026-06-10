@@ -55,12 +55,14 @@ class HomeView(ListView):
 class StartExamView(View):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
-        efinish = ExamFinish.objects.get(student=request.user, exam=pk)
-        types = None
+        efinish = False
+        types = None 
         c = None
         time_e = Exam.objects.get(id=pk).end_time
         time_s = datetime.now()
 
+        if ExamFinish.objects.filter(student=request.user, exam=pk):
+            efinish = ExamFinish.objects.get(student=request.user, exam=pk).finished
 
         if question.question_type == "multiple":
             types = MultipleChoice.objects.filter(question_id=question.id)
@@ -78,7 +80,7 @@ class StartExamView(View):
                 "count": c,
                 "time_start": ((time_s.hour * 3600) + (time_s.minute * 60) + time_s.second),
                 "time_end":((time_e.hour * 3600) + (time_e.minute * 60) +time_e.second),
-                "is_ended": efinish.finished
+                "is_ended": efinish
             },
         )
 
