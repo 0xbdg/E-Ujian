@@ -33,7 +33,7 @@ class SigninView(LoginView):
 class HomeView(ListView):
     model = Exam
     template_name = "client/pages/home.html"
-    paginate_by = 9
+    paginate_by = 6
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
