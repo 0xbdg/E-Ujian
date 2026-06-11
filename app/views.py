@@ -108,4 +108,12 @@ class StartExamView(View):
 
 class DashboardView(View):
     def get(self, request):
-        return render(request, "superuser/pages/dashboard.html")
+        student_c = Student.objects.count()
+        teacher_c = Teacher.objects.count()
+        exam_c = Exam.objects.count()
+        question_c = Question.objects.count()
+        return render(request, "superuser/pages/dashboard.html", context={"sc":student_c, "tc":teacher_c, "ec":exam_c, "qc":question_c})
+
+class TeacherView(View):
+    def get(self, request):
+        return render(request, "superuser/pages/account/teacher.html")

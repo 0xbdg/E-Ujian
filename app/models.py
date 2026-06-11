@@ -95,3 +95,9 @@ class ExamFinish(models.Model):
     student = models.ForeignKey(Account, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     finished = models.BooleanField(default=False)
+
+class Log(models.Model):
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=50)
+    activity = models.CharField(max_length=255)
+    time = models.DateTimeField()

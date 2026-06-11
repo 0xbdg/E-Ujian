@@ -7,5 +7,7 @@ urlpatterns = [
     path("accounts/logout/", LogoutView.as_view(), name="logout"),
     path("soal-ujian/<int:pk>/", StartExamView.as_view(), name="start-exam"),
     path("test/dashboard/", DashboardView.as_view(), name="admin-dashboard"),
+    path("test/account/teacher/", TeacherView.as_view(), name="admin-teacher-acc"),
+
     path("", HomeView.as_view(), name="home"),
 ]
