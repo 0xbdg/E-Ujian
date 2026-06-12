@@ -102,18 +102,35 @@ class StartExamView(View):
 
         ExamFinish(student=request.user, exam=get_object_or_404(Exam, id=pk), finished=True).save()
 
-        #return HttpResponse(test)
         return redirect("home")
 
 
-class DashboardView(View):
-    def get(self, request):
-        student_c = Student.objects.count()
-        teacher_c = Teacher.objects.count()
-        exam_c = Exam.objects.count()
-        question_c = Question.objects.count()
-        return render(request, "superuser/pages/dashboard.html", context={"sc":student_c, "tc":teacher_c, "ec":exam_c, "qc":question_c})
+class DashboardView(TemplateView):
+    template_name = "superuser/pages/dashboard.html"
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["student_c"] = Student.objects.count()
+        context["teacher_c"] = Teacher.objects.count()
+        context["exam_c"] = Exam.objects.count()
+        context["question_c"] = Question.objects.count()
+        return context
 
-class TeacherView(View):
-    def get(self, request):
-        return render(request, "superuser/pages/account/teacher.html")
+class TeacherView(ListView):
+    model = Teacher
+    template_name = "superuser/pages/account/teacher.html"
+    context_object_name = "teachers"
+    paginate_by = 10
+
+class TeacherCreateView(FormView):
+    form_class=""
+    success_url=reverse_lazy("")
+    
+class StudentView(ListView):
+    model = Student
+    context_object_name="students"
+    template_name="superuser/pages/account/student.html" 
+    paginate_by = 10
+
+class AdminView(ListView):
+    template_name="superuser/pages/account/superuser.html"
+    
